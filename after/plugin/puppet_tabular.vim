@@ -62,9 +62,9 @@ if exists(':AddTabularPipeline') && g:puppet_align_classes
         call map(a:lines, 'remove(attributes, 0) . remove(noise, 0) . remove(selectors, 0)')
     endfunction
 
-    " The class definition could be interrupted with enum's multiline, selectors
-    " or whatever else, so tabular will search for any of `[$['",#]` symbols and
-    " pass them into AlignPuppetClass function.
-    au FileType puppet AddTabularPipeline! puppet_class /[$['",#]/ AlignPuppetClass(a:lines)
+    " The class definition could be interrupted with enum's multiline, selectors  or
+    " whatever else, so tabular will search for any of `[$[\]'",#]` or `^\s*[{}]$` symbols
+    " and pass them into AlignPuppetClass function.
+    au FileType puppet AddTabularPipeline! puppet_class /[$[\]'",#]\|^\s*[{}]$/ AlignPuppetClass(a:lines)
     au FileType puppet inoremap <buffer> <silent> <C-a> <Esc>:Tabularize puppet_class<CR>A
 endif
