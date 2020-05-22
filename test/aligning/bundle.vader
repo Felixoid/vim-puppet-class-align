@@ -23,6 +23,15 @@ Given puppet (Sample class):
       String[1] $environment = $::environment,
       Optional[String[1]] $function = $::function,
       Type::Server::Hostname $monitoring_queue = $::monitoring_queue,
+      Hash $some_hash= some_function(
+          {
+              'key'=>'value',
+          },
+          [
+              1,
+              2,
+          ]
+      ),
       Array[Pattern[/\A[a-z][a-z0-9_-]*\Z/]] $monitoring_checks =$::monitoring_checks,
       Optional[Type::Server::Hostname] $project_network= defined('$::project_network') ? {
           true => $::project_network,
@@ -38,7 +47,7 @@ Given puppet (Sample class):
 
 Execute (Tabularize class and resource):
   2 Tabularize puppet_class
-  33 Tabularize puppet_class
+  43 Tabularize puppet_class
 
 Expect (Aligning works fine):
   class some::example (
@@ -65,6 +74,15 @@ Expect (Aligning works fine):
       String[1]                              $environment                = $::environment,
       Optional[String[1]]                    $function                   = $::function,
       Type::Server::Hostname                 $monitoring_queue           = $::monitoring_queue,
+      Hash                                   $some_hash                  = some_function(
+          {
+              'key' => 'value',
+          },
+          [
+              1,
+              2,
+          ]
+      ),
       Array[Pattern[/\A[a-z][a-z0-9_-]*\Z/]] $monitoring_checks          = $::monitoring_checks,
       Optional[Type::Server::Hostname]       $project_network            = defined('$::project_network') ? {
           true    => $::project_network,
